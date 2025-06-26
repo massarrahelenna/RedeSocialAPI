@@ -3,82 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title>Rede Social - Upload e Galeria</title>
-  <!-- <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 0 10px;
-      background: #f9f9f9;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #1a73e8;
-    }
-    form {
-      background: #fff;
-      padding: 15px 20px;
-      box-shadow: 0 0 10px #ccc;
-      border-radius: 6px;
-      margin-bottom: 30px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input[type="text"],
-    input[type="file"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    button {
-      margin-top: 15px;
-      background-color: #1a73e8;
-      border: none;
-      color: white;
-      padding: 10px 18px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #155ab6;
-    }
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
-      gap: 15px;
-    }
-    .photo-card {
-      background: white;
-      border-radius: 6px;
-      box-shadow: 0 0 5px #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    .photo-card img {
-      max-width: 100%;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
-    .photo-card .desc {
-      font-size: 14px;
-      color: #555;
-      min-height: 40px;
-    }
-    .photo-card .user {
-      font-size: 12px;
-      color: #999;
-      margin-top: 4px;
-    }
-  </style> -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>📸 Rede Social - Upload e Galeria</h1>
+  <h1>Rede Social - Upload e Galeria</h1>
 
   <form id="uploadForm">
     <label for="image">Escolha uma imagem:</label>
@@ -96,63 +24,6 @@
   <h2>Galeria</h2>
   <div id="gallery">Carregando fotos...</div>
 
-  <!-- <script>
-    const form = document.getElementById("uploadForm");
-    const gallery = document.getElementById("gallery");
-
-    // Função para buscar fotos e mostrar na galeria
-    async function loadPhotos() {
-      gallery.innerHTML = "Carregando fotos...";
-      try {
-        const res = await fetch("http://localhost:5000/api/photos");
-        const photos = await res.json();
-
-        if (photos.length === 0) {
-          gallery.innerHTML = "<p>Nenhuma foto enviada ainda.</p>";
-          return;
-        }
-
-        gallery.innerHTML = "";
-        photos.forEach(photo => {
-          const card = document.createElement("div");
-          card.classList.add("photo-card");
-          card.innerHTML = `
-            <img src="http://localhost:5000/uploads/${photo.image_path}" alt="Foto" />
-            <div class="desc">${photo.description}</div>
-            <div class="user">Por: ${photo.user}</div>
-          `;
-          gallery.appendChild(card);
-        });
-      } catch (err) {
-        gallery.innerHTML = "<p>Erro ao carregar fotos.</p>";
-        console.error(err);
-      }
-    }
-
-    // Evento do formulário
-    form.addEventListener("submit", async e => {
-      e.preventDefault();
-      const formData = new FormData(form);
-
-      try {
-        const res = await fetch("http://localhost:5000/api/photos", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!res.ok) throw new Error("Erro ao enviar foto");
-
-        alert("Foto enviada com sucesso!");
-        form.reset();
-        loadPhotos(); // Atualiza a galeria
-      } catch (err) {
-        alert(err.message);
-        console.error(err);
-      }
-    });
-
-    // Carrega fotos ao abrir a página
-    loadPhotos();
-  </script> -->
+  <script src="script.js"></script>
 </body>
 </html>
