@@ -1,56 +1,127 @@
-const form = document.getElementById("uploadForm");
 const gallery = document.getElementById("gallery");
+const form = document.getElementById("uploadForm");
+const userInput = document.getElementById("user");
+const btnAll = document.getElementById("btnAll");
+const btnMine = document.getElementById("btnMine");
 
-// Função para buscar fotos e mostrar na galeria
-async function loadPhotos() {
-  gallery.innerHTML = "Carregando fotos...";
+let allPhotos = [];
+let currentView = "all";
+let localComments = {};
+let localLikes = {};
+
+async function fetchPhotos() {
   try {
     const res = await fetch("http://localhost:5000/api/photos");
-    const photos = await res.json();
-
-    if (photos.length === 0) {
-      gallery.innerHTML = "<p>Nenhuma foto enviada ainda.</p>";
-      return;
-    }
-
-    gallery.innerHTML = "";
-    photos.forEach(photo => {
-      const card = document.createElement("div");
-      card.classList.add("photo-card");
-      card.innerHTML = `
-        <img src="http://localhost:5000/uploads/${photo.image_path}" alt="Foto" />
-        <div class="desc">${photo.description}</div>
-        <div class="user">Por: ${photo.user}</div>
-      `;
-      gallery.appendChild(card);
-    });
+    allPhotos = await res.json();
+    renderPhotos();
   } catch (err) {
     gallery.innerHTML = "<p>Erro ao carregar fotos.</p>";
-    console.error(err);
   }
 }
 
-// Evento do formulário
-form.addEventListener("submit", async e => {
+function renderPhotos() {
+  const username = userInput.value.trim().toLowerCase();
+  const filtered = currentView === "mine" && username
+    ? allPhotos.filter(p => p.user.toLowerCase() === username)
+    : allPhotos;
+
+  gallery.innerHTML = filtered.length === 0
+    ? "<p>Nenhuma foto para exibir.</p>"
+    : filtered.map(photo => {
+        const photoId = photo.id || photo.image_path;
+        const likes = localLikes[photoId] || 0;
+        const comments = localComments[photoId] || [];
+
+        return `
+          <div class="photo-card">
+            <img src="http://localhost:5000/uploads/${photo.image_path}" />
+            <div class="desc">${photo.description}</div>
+            <div class="user">Por: ${photo.user}</div>
+            <div class="actions">
+              <button class="like-btn" data-id="${photoId}">❤️ Curtir (${likes})</button>
+              <button class="toggle-comments" data-id="${photoId}">💬 Comentários (${comments.length})</button>
+            </div>
+            <div class="comments" id="comments-${photoId}" style="display:none;">
+              ${comments.map(c => `<p><strong>${c.user}:</strong> ${c.text}</p>`).join("")}
+              <form class="comment-form" data-id="${photoId}">
+                <input type="text" placeholder="Digite um comentário" required />
+                <button type="submit">Enviar</button>
+              </form>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+  attachLikeHandlers();
+  attachCommentHandlers();
+  attachToggleCommentSections();
+}
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const formData = new FormData(form);
-
+  const data = new FormData(form);
   try {
-    const res = await fetch("http://localhost:5000/api/photos", {
+    await fetch("http://localhost:5000/api/photos", {
       method: "POST",
-      body: formData,
+      body: data
     });
-
-    if (!res.ok) throw new Error("Erro ao enviar foto");
-
-    alert("Foto enviada com sucesso!");
     form.reset();
-    loadPhotos(); // Atualiza a galeria
+    await fetchPhotos();
   } catch (err) {
-    alert(err.message);
-    console.error(err);
+    alert("Erro ao enviar foto.");
   }
 });
 
-// Carrega fotos ao abrir a página
-loadPhotos();
+btnAll.addEventListener("click", () => {
+  currentView = "all";
+  btnAll.classList.add("active");
+  btnMine.classList.remove("active");
+  renderPhotos();
+});
+
+btnMine.addEventListener("click", () => {
+  currentView = "mine";
+  btnMine.classList.add("active");
+  btnAll.classList.remove("active");
+  renderPhotos();
+});
+
+function attachLikeHandlers() {
+  document.querySelectorAll(".like-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      localLikes[id] = (localLikes[id] || 0) + 1;
+      renderPhotos();
+    });
+  });
+}
+
+function attachToggleCommentSections() {
+  document.querySelectorAll(".toggle-comments").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const box = document.getElementById(`comments-${id}`);
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    });
+  });
+}
+
+function attachCommentHandlers() {
+  document.querySelectorAll(".comment-form").forEach(form => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const id = form.dataset.id;
+      const input = form.querySelector("input");
+      const text = input.value.trim();
+      const user = userInput.value.trim() || "Anônimo";
+
+      if (!localComments[id]) localComments[id] = [];
+      localComments[id].push({ user, text });
+
+      input.value = "";
+      renderPhotos(); // re-render para atualizar comentário
+    });
+  });
+}
+
+fetchPhotos();

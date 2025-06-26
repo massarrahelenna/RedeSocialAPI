@@ -4,11 +4,30 @@
   <meta charset="UTF-8" />
   <title>Rede Social - Upload e Galeria</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Para garantir que os botões de filtro apareçam bonitos */
+    #filterButtons {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #filterButtons button {
+      padding: 8px 20px;
+      margin: 0 8px;
+      border: none;
+      background: #1a73e8;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #filterButtons button.active {
+      background: #155ab6;
+    }
+  </style>
 </head>
 <body>
-  <h1>Rede Social - Upload e Galeria</h1>
+  <h1>📸 Rede Social - Upload e Galeria</h1>
 
-  <form id="uploadForm">
+  <form id="uploadForm" style="max-width: 500px; margin: auto;">
     <label for="image">Escolha uma imagem:</label>
     <input type="file" id="image" name="image" accept="image/*" required />
 
@@ -18,11 +37,17 @@
     <label for="description">Descrição:</label>
     <input type="text" id="description" name="description" placeholder="Escreva algo sobre a foto" required />
 
-    <button type="submit">Enviar</button>
+    <button type="submit" style="margin-top: 15px; width: 100%;">Enviar</button>
   </form>
 
-  <h2>Galeria</h2>
-  <div id="gallery">Carregando fotos...</div>
+  <div id="filterButtons">
+    <button id="btnAll" class="active">Ver Todos</button>
+    <button id="btnMine">Meus Posts</button>
+  </div>
+
+  <div id="gallery" style="max-width: 700px; margin: 20px auto;">
+    Carregando fotos...
+  </div>
 
   <script src="script.js"></script>
 </body>
