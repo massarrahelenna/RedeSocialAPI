@@ -1,54 +1,54 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <title>Rede Social - Upload e Galeria</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Para garantir que os botões de filtro apareçam bonitos */
-    #filterButtons {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    #filterButtons button {
-      padding: 8px 20px;
-      margin: 0 8px;
-      border: none;
-      background: #1a73e8;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #filterButtons button.active {
-      background: #155ab6;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Mural Dinâmico</title>
+
+  <!-- Fonte Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Seu CSS repaginado -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FontAwesome para o ícone de coração -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
 </head>
 <body>
-  <h1>📸 Rede Social - Upload e Galeria</h1>
+  <header class="site-header">
+    <h1>📸 Rede Social</h1>
+    <p>Compartilhe seus momentos favoritos</p>
+  </header>
 
-  <form id="uploadForm" style="max-width: 500px; margin: auto;">
-    <label for="image">Escolha uma imagem:</label>
-    <input type="file" id="image" name="image" accept="image/*" required />
+  <main>
+    <div class="container">
+      <h2>Mural de Reconhecimento</h2>
 
-    <label for="user">Usuário:</label>
-    <input type="text" id="user" name="user" placeholder="Digite seu nome" required />
+      <!-- Feed dinâmico -->
+      <div id="feed" class="feed"></div>
 
-    <label for="description">Descrição:</label>
-    <input type="text" id="description" name="description" placeholder="Escreva algo sobre a foto" required />
+      <!-- Formulário de upload -->
+      <div class="upload-fotos card">
+        <h3>Adicionar Nova Foto ao Mural</h3>
+        <form id="uploadForm">
+          <label for="photoInput">Selecione a imagem</label>
+          <input type="file" id="photoInput" accept="image/*" required />
 
-    <button type="submit" style="margin-top: 15px; width: 100%;">Enviar</button>
-  </form>
+          <label for="captionInput">Legenda (opcional)</label>
+          <input type="text" id="captionInput" placeholder="Escreva algo sobre a foto" />
 
-  <div id="filterButtons">
-    <button id="btnAll" class="active">Ver Todos</button>
-    <button id="btnMine">Meus Posts</button>
-  </div>
+          <button type="submit" class="btn-primary">Postar</button>
+        </form>
+      </div>
+    </div>
+  </main>
 
-  <div id="gallery" style="max-width: 700px; margin: 20px auto;">
-    Carregando fotos...
-  </div>
+  <footer class="site-footer">
+    <p>&copy; 2025 Rede Social – Todos os direitos reservados</p>
+  </footer>
 
-  <script src="script.js"></script>
+  <!-- Script do feed (defer inline para garantir carregamento após o HTML) -->
+  <script defer src="scriptTest.js"></script>
 </body>
 </html>
