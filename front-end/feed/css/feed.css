@@ -1,0 +1,110 @@
+:focus {
+  outline: 2px dashed #007942;
+  outline-offset: 2px;
+}
+
+/* Reset básico */
+body {
+  margin: 0;
+  background: #f2f2f2;
+  font-family: 'Signika', sans-serif;
+}
+
+/* Cabeçalho fixo do feed */
+.feed-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 45px;               /* ajuste este valor se sua medição for diferente */
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;            /* padding horizontal */
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Espaço para não ficar embaixo do header */
+main {
+  padding: 80px 20px 20px;    /* top = mesma altura do .feed-header */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Estilo dos cards */
+article.post {
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-user {
+  font-weight: 700;
+  color: #00512b;
+  margin-bottom: 8px;
+}
+
+.desc {
+  margin: 0 0 10px;
+  color: #333;
+  flex-grow: 1;
+}
+
+figure {
+  margin: 0 0 10px;
+}
+
+figure img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.interactions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.interactions button {
+  flex: 1;
+  background: #00512b;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.interactions button:disabled {
+  background: #999;
+  cursor: wait;
+}
+
+.interactions button:hover:not(:disabled) {
+  background: #007942;
+}
+
+.comments {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.comments input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.comment {
+  font-size: 0.9rem;
+  color: #555;
+}
