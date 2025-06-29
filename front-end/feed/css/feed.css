@@ -45,11 +45,11 @@ body {
 
 /* Empurra o main para não ficar embaixo do header */
 main {
-  padding: 45px 20px 20px;   /* top = altura da .feed-header */
+  padding: 80px 20px 20px;   /* top = altura da .feed-header */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 /* Cards de post */
@@ -117,7 +117,10 @@ figure img {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 100%;
+  width: 90%;
+  max-width: 220px;   
+  margin: 0 auto;     
+  display: block;     
 }
 .comment {
   font-size: 0.9rem;
