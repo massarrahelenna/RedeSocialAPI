@@ -3,37 +3,56 @@
   outline-offset: 2px;
 }
 
-/* Reset básico */
 body {
   margin: 0;
   background: #f2f2f2;
   font-family: 'Signika', sans-serif;
 }
 
-/* Cabeçalho fixo do feed */
+/* Header fixo do feed */
 .feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: 45px;               /* ajuste este valor se sua medição for diferente */
+  height: 45px;               /* ajuste se necessário */
+  padding: 0 20px;
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;            /* padding horizontal */
   box-sizing: border-box;
   z-index: 1000;
 }
 
-/* Espaço para não ficar embaixo do header */
+.feed-header h1 {
+  margin: 0;
+  color: #00512b;
+  font-size: 1.5rem;
+}
+
+.nav-btn {
+  background: #00512b;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.nav-btn:hover {
+  background: #007942;
+}
+
+/* Empurra o main para não ficar embaixo do header */
 main {
-  padding: 80px 20px 20px;    /* top = mesma altura do .feed-header */
+  padding: 45px 20px 20px;   /* top = altura da .feed-header */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
 
-/* Estilo dos cards */
+/* Cards de post */
 article.post {
   background: #fff;
   padding: 15px;
@@ -81,12 +100,10 @@ figure img {
   cursor: pointer;
   transition: background 0.3s;
 }
-
 .interactions button:disabled {
   background: #999;
   cursor: wait;
 }
-
 .interactions button:hover:not(:disabled) {
   background: #007942;
 }
@@ -96,14 +113,12 @@ figure img {
   flex-direction: column;
   gap: 5px;
 }
-
 .comments input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 100%;
 }
-
 .comment {
   font-size: 0.9rem;
   color: #555;

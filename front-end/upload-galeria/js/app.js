@@ -8,7 +8,7 @@ const submitBtn    = document.getElementById('submitBtn');
 const gallery      = document.getElementById('gallery');
 const template     = document.getElementById('photo-template');
 
-// Preview da imagem
+// Pré-visualização da imagem
 imgInput.addEventListener('change', () => {
   const file = imgInput.files[0];
   if (!file) return;
@@ -24,8 +24,7 @@ imgInput.addEventListener('change', () => {
 // Envio do formulário
 form.addEventListener('submit', async e => {
   e.preventDefault();
-  ['error-image','error-user','error-desc']
-    .forEach(id => document.getElementById(id).textContent = '');
+  ['error-image','error-user','error-desc'].forEach(id=>document.getElementById(id).textContent='');
 
   let valid = true;
   if (!imgInput.files.length) {
@@ -44,17 +43,17 @@ form.addEventListener('submit', async e => {
 
   submitBtn.disabled = true;
   spinner.style.display = 'block';
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 1000)); // simula upload
   spinner.style.display = 'none';
   submitBtn.disabled = false;
 
-  // Atualiza galeria
+  // Atualiza galeria localmente
   const card = template.content.cloneNode(true);
   const imgEl = card.querySelector('img');
   const descEl = card.querySelector('.desc');
   const userEl = card.querySelector('.user');
-  imgEl.src       = previewImg.src;
-  imgEl.alt       = form.description.value;
+  imgEl.src         = previewImg.src;
+  imgEl.alt         = form.description.value;
   descEl.textContent = form.description.value;
   userEl.textContent = form.user.value;
   gallery.prepend(card);
@@ -68,19 +67,17 @@ async function fetchPhotos() {
   gallery.textContent = 'Carregando fotos…';
   await new Promise(r => setTimeout(r, 800));
   gallery.textContent = '';
-  const photos = []; // substituir por fetch real
+  const photos = []; // aqui, fetch('/api/photos')
   if (!photos.length) {
     gallery.textContent = 'Nenhuma foto para exibir.';
     return;
   }
   photos.forEach(p => {
     const card = template.content.cloneNode(true);
-    const imgEl = card.querySelector('img');
-    const descEl = card.querySelector('.desc');
-    const userEl = card.querySelector('.user');
-    imgEl.src = p.url; imgEl.alt = p.description;
-    descEl.textContent = p.description;
-    userEl.textContent = p.user;
+    card.querySelector('img').src = p.url;
+    card.querySelector('img').alt = p.description;
+    card.querySelector('.desc').textContent = p.description;
+    card.querySelector('.user').textContent = p.user;
     gallery.append(card);
   });
 }

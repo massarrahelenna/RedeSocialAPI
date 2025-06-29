@@ -1,0 +1,150 @@
+:focus {
+  outline: 2px dashed #007942;
+  outline-offset: 2px;
+}
+
+body {
+  margin: 0;
+  padding: 0 20px 20px;
+  background: #f2f2f2;
+  font-family: 'Signika', sans-serif;
+}
+
+/* Header fixo com botão de navegação */
+.upload-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 80px;                /* ajuste se necessário */
+  padding: 0 20px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  z-index: 1000;
+}
+.upload-header h1 {
+  margin: 0;
+  color: #00512b;
+  font-size: 2.5rem;
+}
+.nav-btn {
+  background: #00512b;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.nav-btn:hover {
+  background: #007942;
+}
+
+/* Empurra o main para não ficar embaixo do header */
+main {
+  margin-top: 80px;          /* igual à altura da .upload-header */
+}
+
+/* Formulário */
+form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 400px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+.spinner {
+  display: none;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #00512b;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+button:disabled {
+  background: #999;
+  cursor: wait;
+}
+button:hover:not(:disabled) {
+  background: #007942;
+}
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  display: block;
+}
+
+/* Preview */
+#preview-container {
+  margin-top: 15px;
+  display: none;
+  text-align: center;
+}
+#preview {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* Galeria */
+section h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+#gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+figure.photo-card {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 5px #ccc;
+  padding: 10px;
+  text-align: center;
+}
+figure.photo-card img {
+  width: 100%;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+.desc {
+  font-size: 0.9rem;
+  color: #555;
+  min-height: 40px;
+}
+.user {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 4px;
+}
