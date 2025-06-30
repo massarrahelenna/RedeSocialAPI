@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Clone</title>
+    <title>Instagram IDP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -57,7 +57,7 @@
             <div class="text-xl font-semibold">Instagram</div>
             <div class="flex items-center space-x-4">
                 <button id="uploadBtn" class="text-2xl"><i class="fas fa-plus-square"></i></button>
-                <div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
+                <div class="w-8 h-8 rounded-full overflow-hidden">
                     <img src="./noFoto.jpg" alt="Foto de perfil genérica" />
                 </div>
             </div>
@@ -66,27 +66,25 @@
     
     <!-- Main Content -->
     <main class="pt-14 pb-16 max-w-screen-md mx-auto">
-        <!-- Stories -->
+        <!-- Stories/participantes do projeto -->
         <div class="flex overflow-x-auto space-x-4 py-4 px-4 bg-white mb-4 border-b border-gray-200 hide-scrollbar">
-            <!-- Story items -->
             <div class="flex flex-col items-center space-y-1">
                 <div class="w-16 h-16 rounded-full border-2 border-pink-500 p-0.5">
                     <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
                 </div>
                 <span class="text-xs">@massarrahelenna</span>
             </div>
-            <!-- Additional story placeholders -->
             <div class="flex flex-col items-center space-y-1">
                 <div class="w-16 h-16 rounded-full border-2 border-gray-200 p-0.5">
                     <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
                 </div>
-                <span class="text-xs">@andreiativeron</span>
+                <span class="text-xs">@andreia.tiveron</span>
             </div>
             <div class="flex flex-col items-center space-y-1">
                 <div class="w-16 h-16 rounded-full border-2 border-gray-200 p-0.5">
                     <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
                 </div>
-                <span class="text-xs">@arturmss</span>
+                <span class="text-xs">@arturmssc</span>
             </div>
         </div>
         
@@ -99,7 +97,7 @@
                         <div class="w-8 h-8 rounded-full overflow-hidden">
                             <img src="./noFoto.jpg" alt="User  avatar" />
                         </div>
-                        <span class="font-semibold text-sm">travel_lover</span>
+                        <span class="font-semibold text-sm">andreia.tiveron</span>
                     </div>
                     <button><i class="fas fa-ellipsis-h"></i></button>
                 </div>
@@ -121,7 +119,7 @@
                     <div class="font-semibold text-sm mb-1" id="likes-1">1,234 curtidas</div>
                     
                     <div class="text-sm mb-1">
-                        <span class="font-semibold">travel_lover</span> A vista mais incrível que já vi na minha vida! #montanhas #natureza
+                        <span class="font-semibold">andreia.tiveron</span> não sei o que, não sei o que lá, bla bla bla
                     </div>
                     
                     <div class="text-sm text-gray-500 mb-1">
@@ -144,7 +142,7 @@
                         <div class="w-8 h-8 rounded-full overflow-hidden">
                             <img src="./noFoto.jpg" alt="User  avatar" />
                         </div>
-                        <span class="font-semibold text-sm">food_master</span>
+                        <span class="font-semibold text-sm">arturmssc</span>
                     </div>
                     <button><i class="fas fa-ellipsis-h"></i></button>
                 </div>
@@ -166,7 +164,7 @@
                     <div class="font-semibold text-sm mb-1" id="likes-2">3,456 curtidas</div>
                     
                     <div class="text-sm mb-1">
-                        <span class="font-semibold">food_master</span> Hoje preparei esta iguaria para um jantar especial! #gourmet #cheflife
+                        <span class="font-semibold">arturmssc</span> bla bla bla, bla bla bla
                     </div>
                     
                     <div class="text-sm text-gray-500 mb-1">
@@ -191,8 +189,8 @@
             <button class="text-2xl"><i class="far fa-compass"></i></button>
             <button class="text-2xl" id="uploadBtnMobile"><i class="fas fa-plus-square"></i></button>
             <button class="text-2xl"><i class="far fa-heart"></i></button>
-            <div class="w-6 h-6 rounded-full bg-gray-300 overflow-hidden">
-                <img src="https://placehold.co/24x24" alt="Small circular user profile picture thumbnail" />
+            <div class="w-8 h-8 rounded-full overflow-hidden">
+                <img src="./noFoto.jpg" alt="Small circular user profile picture thumbnail" />
             </div>
         </div>
     </div>
@@ -223,7 +221,7 @@
                 <textarea id="caption" class="w-full border border-gray-300 rounded p-2 text-sm" placeholder="Escreva uma legenda..."></textarea>
             </div>
             
-            <button id="postButton" class="bg-blue-500 text-white w-full py-2 rounded font-semibold disabled:opacity-50" disabled>Compartilhar</button>
+            <button id="postButton" class="bg-blue-500 text-white w-full py-2 rounded font-semibold disabled:opacity-50" disabled>Publicar</button>
         </div>
     </div>
     
@@ -238,7 +236,7 @@
     const postButton = document.getElementById('postButton');
     const captionInput = document.getElementById('caption');
     const postsContainer = document.getElementById('postsContainer');
-    const username = 'você'; // ou pegue dinamicamente via login futuramente
+    const username = 'massarrahelenna'; 
 
     async function fetchPhotos() {
         try {
@@ -383,16 +381,24 @@
             if (!commentText) return;
 
             // Envia o comentário para a API
-            const res = await fetch(`http://localhost:5000/api/photos/${photoId}/comments`, {
-                method: "POST",
+            const response = await fetch(`http://localhost:5000/api/photos/${photoId}`);
+            const photoData = await response.json();
+
+            // Adiciona o novo comentário
+            const updatedComments = [...(photoData.comments || []), { user: username, text: commentText }];
+
+            // Atualiza a foto inteira com os novos comentários
+            const res = await fetch(`http://localhost:5000/api/photos/${photoId}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user: username,
-                    text: commentText
+                    ...photoData,
+                    comments: updatedComments
                 })
             });
+
 
             if (res.ok) {
                 const commentDiv = document.createElement('div');

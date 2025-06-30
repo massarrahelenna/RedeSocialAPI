@@ -23,12 +23,12 @@ mongo = PyMongo(app)
 # Cria pasta de uploads se não existir
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
-# 🌐 Rota inicial
+# Rota inicial
 @app.route("/")
 def index():
     return "API da Rede Social rodando! Use /api/photos para interagir."
 
-# ❌ Ignora erro do favicon
+# Ignora erro do favicon
 @app.route("/favicon.ico")
 def favicon():
     return "", 204
@@ -51,7 +51,8 @@ def upload_photo():
         "user": request.form.get("user"),
         "description": request.form.get("description"),
         "image_path": filename,
-        "created_at": datetime.datetime.utcnow()
+        "created_at": datetime.datetime.utcnow(),
+        "comments": []  # <- adiciona campo de comentários vazio inicialmente
     }
 
     result = mongo.db.photos.insert_one(photo_data)
@@ -59,16 +60,36 @@ def upload_photo():
 
     return jsonify(photo_data), 201
 
-# 📥 Listar fotos (GET)
+# Listar as fotos (GET)
 @app.route("/api/photos", methods=["GET"])
 def get_photos():
     photos = list(mongo.db.photos.find())
     for photo in photos:
         photo["_id"] = str(photo["_id"])
         photo["image_url"] = f"http://localhost:5000/uploads/{photo['image_path']}"
+        photo["comments"] = photo.get("comments", [])  # Garante que sempre tenha a chave
     return jsonify(photos)
 
-# 🗑️ Deletar foto (DELETE)
+# Adiciona comentário (POST)
+@app.route('/api/photos/<photo_id>/comments', methods=['POST'])
+def add_comment(photo_id):
+    data = request.json
+    photo = mongo.db.photos.find_one({'_id': ObjectId(photo_id)})
+    if photo:
+        comments = photo.get('comments', [])
+        comments.append({
+            'user': data.get('user'),
+            'text': data.get('text')
+        })
+        mongo.db.photos.update_one(
+            {'_id': ObjectId(photo_id)},
+            {'$set': {'comments': comments}}
+        )
+        return jsonify({'message': 'Comentário adicionado com sucesso'}), 200
+    return jsonify({'error': 'Foto não encontrada'}), 404
+
+
+# Deletar foto 
 @app.route("/api/photos/<id>", methods=["DELETE"])
 def delete_photo(id):
     result = mongo.db.photos.delete_one({"_id": ObjectId(id)})
@@ -77,11 +98,11 @@ def delete_photo(id):
     else:
         return jsonify({"error": "Foto não encontrada"}), 404
 
-# 🖼️ Servir imagem (GET)
+# Servir imagem (GET)
 @app.route("/uploads/<filename>")
 def serve_image(filename):
     return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
-# ▶️ Inicia o servidor
+# Inicia o servidor
 if __name__ == "__main__":
     app.run(debug=True)

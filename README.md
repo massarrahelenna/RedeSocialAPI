@@ -1,3 +1,4 @@
 # API rest para "publicar" fotos como em uma rede social
 
-### pip install flask flask-pymongo flask-cors python-dotenv - comando para instalar o flask e o python
+### Projeto para a disciplina de Banco de Dados, API Rest com front-end.
+#### f
