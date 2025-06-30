@@ -2,13 +2,9 @@
 
 ### Projeto para a disciplina de Banco de Dados, API Rest com front-end e banco de dados MongoDB com ReplicaSet.
 #### 1. Objetivo do Projeto
-O objetivo principal deste projeto é desenvolver uma aplicação web que simula o funcionamento de uma rede social no estilo do Instagram, permitindo que usuários:
-Publiquem imagens com legenda;
-Visualizem postagens de outros usuários;
-Curtam publicações;
-Comentem nas fotos;
-Acompanhem uma interface responsiva semelhante ao feed tradicional do Instagram.
-O projeto visa aplicar conhecimentos práticos em desenvolvimento web full stack, com foco em Python (Flask) no backend e HTML/CSS/JavaScript com Tailwind CSS no frontend.
+Cada grupo irá modelar a estrutura de dados de uma mini-rede social e configurar um
+replica set funcional com 3 nós MongoDB, simulando um sistema distribuído.
+ O grupo 4 ficou responsável por cuidar da parte do "publicação" de fotos cuidando dos comentários e das legendas.
 
 ##### 2. Tecnologias Utilizadas
 Backend:
