@@ -27,7 +27,6 @@ JavaScript (lógica de interação).
 
 #### 3. Funcionalidades Implementadas
 *Publicação de Imagens:*
-
 Upload de arquivos de imagem com legenda e nome de usuário.
 Armazenamento da imagem em uma pasta local (uploads/) e dados no MongoDB.
 

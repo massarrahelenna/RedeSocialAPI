@@ -52,7 +52,7 @@ def upload_photo():
         "description": request.form.get("description"),
         "image_path": filename,
         "created_at": datetime.datetime.utcnow(),
-        "comments": []  # <- adiciona campo de comentários vazio inicialmente
+        "comments": []  # campo de comentários vazio (inicialmente)
     }
 
     result = mongo.db.photos.insert_one(photo_data)
