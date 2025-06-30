@@ -13,10 +13,9 @@ Flask (framework web);
 PyMongo (integração com MongoDB);
 Flask-CORS (controle de políticas CORS);
 MongoDB (banco de dados NoSQL);
-Dotenv (variáveis de ambiente);
 
 Frontend:
-HTML5;
+HTML;
 Tailwind CSS (estilização utilitária);
 Font Awesome (ícones);
 JavaScript (lógica de interação).
