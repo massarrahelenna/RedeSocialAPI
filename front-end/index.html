@@ -383,7 +383,7 @@
           try {
               // Envia o novo comentário para a API na rota correta
               const res = await fetch(`http://localhost:5000/api/photos/${photoId}/comments`, {
-                  method: "POST", // 👈 1. Método correto
+                  method: "POST", //  1. Método correto e não o PUT que estava
                   headers: {
                       "Content-Type": "application/json"
                   },
