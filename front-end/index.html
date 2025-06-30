@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+        }
+        
+        .navbar {
+            border-bottom: 1px solid #dbdbdb;
+        }
+        
+        .post-container {
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background-color: white;
+            max-width: 614px;
+        }
+        
+        .comment-box {
+            border-top: 1px solid #efefef;
+        }
+        
+        .like-btn.active {
+            color: #ed4956;
+        }
+        
+        .upload-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+        }
+
+        
+        .upload-container {
+            background-color: white;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar bg-white fixed w-full z-10">
+        <div class="max-w-screen-md mx-auto px-4 flex justify-between items-center h-14">
+            <div class="text-xl font-semibold">Instagram</div>
+            <div class="flex items-center space-x-4">
+                <button id="uploadBtn" class="text-2xl"><i class="fas fa-plus-square"></i></button>
+                <div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden">
+                    <img src="./noFoto.jpg" alt="Foto de perfil genérica" />
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-14 pb-16 max-w-screen-md mx-auto">
+        <!-- Stories -->
+        <div class="flex overflow-x-auto space-x-4 py-4 px-4 bg-white mb-4 border-b border-gray-200 hide-scrollbar">
+            <!-- Story items -->
+            <div class="flex flex-col items-center space-y-1">
+                <div class="w-16 h-16 rounded-full border-2 border-pink-500 p-0.5">
+                    <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
+                </div>
+                <span class="text-xs">@massarrahelenna</span>
+            </div>
+            <!-- Additional story placeholders -->
+            <div class="flex flex-col items-center space-y-1">
+                <div class="w-16 h-16 rounded-full border-2 border-gray-200 p-0.5">
+                    <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
+                </div>
+                <span class="text-xs">@andreiativeron</span>
+            </div>
+            <div class="flex flex-col items-center space-y-1">
+                <div class="w-16 h-16 rounded-full border-2 border-gray-200 p-0.5">
+                    <img src="./noFoto.jpg" alt="Foto de perfil genérica" class="rounded-full w-full h-full" />
+                </div>
+                <span class="text-xs">@arturmss</span>
+            </div>
+        </div>
+        
+        <!-- Posts -->
+        <div id="postsContainer" class="space-y-4">
+            <!-- Post 1 -->
+            <div class="post-container">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full overflow-hidden">
+                            <img src="./noFoto.jpg" alt="User  avatar" />
+                        </div>
+                        <span class="font-semibold text-sm">travel_lover</span>
+                    </div>
+                    <button><i class="fas fa-ellipsis-h"></i></button>
+                </div>
+                
+                <div class="aspect-w-1 aspect-h-1 bg-gray-100">
+                    <img src="https://placehold.co/614x614" alt="Beautiful mountain landscape" class="w-full h-full object-cover" />
+                </div>
+                
+                <div class="px-4 py-3">
+                    <div class="flex justify-between mb-2">
+                        <div class="flex space-x-4">
+                            <button class="like-btn text-2xl" data-post="1"><i class="far fa-heart"></i></button>
+                            <button class="text-2xl"><i class="far fa-comment"></i></button>
+                            <button class="text-2xl"><i class="far fa-paper-plane"></i></button>
+                        </div>
+                        <button class="text-2xl"><i class="far fa-bookmark"></i></button>
+                    </div>
+                    
+                    <div class="font-semibold text-sm mb-1" id="likes-1">1,234 curtidas</div>
+                    
+                    <div class="text-sm mb-1">
+                        <span class="font-semibold">travel_lover</span> A vista mais incrível que já vi na minha vida! #montanhas #natureza
+                    </div>
+                    
+                    <div class="text-sm text-gray-500 mb-1">
+                        <button>Ver todos os 42 comentários</button>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400">HÁ 3 HORAS</div>
+                </div>
+                
+                <div class="comment-box px-4 py-3 flex">
+                    <input type="text" placeholder="Adicione um comentário..." class="flex-grow text-sm outline-none" />
+                    <button class="text-blue-500 font-semibold text-sm ml-2">Publicar</button>
+                </div>
+            </div>
+            
+            <!-- Post 2 -->
+            <div class="post-container">
+                <div class="flex items-center justify-between px-4 py-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full overflow-hidden">
+                            <img src="./noFoto.jpg" alt="User  avatar" />
+                        </div>
+                        <span class="font-semibold text-sm">food_master</span>
+                    </div>
+                    <button><i class="fas fa-ellipsis-h"></i></button>
+                </div>
+                
+                <div class="aspect-w-1 aspect-h-1 bg-gray-100">
+                    <img src="https://placehold.co/614x614" alt="Gourmet dish presentation" class="w-full h-full object-cover" />
+                </div>
+                
+                <div class="px-4 py-3">
+                    <div class="flex justify-between mb-2">
+                        <div class="flex space-x-4">
+                            <button class="like-btn text-2xl" data-post="2"><i class="far fa-heart"></i></button>
+                            <button class="text-2xl"><i class="far fa-comment"></i></button>
+                            <button class="text-2xl"><i class="far fa-paper-plane"></i></button>
+                        </div>
+                        <button class="text-2xl"><i class="far fa-bookmark"></i></button>
+                    </div>
+                    
+                    <div class="font-semibold text-sm mb-1" id="likes-2">3,456 curtidas</div>
+                    
+                    <div class="text-sm mb-1">
+                        <span class="font-semibold">food_master</span> Hoje preparei esta iguaria para um jantar especial! #gourmet #cheflife
+                    </div>
+                    
+                    <div class="text-sm text-gray-500 mb-1">
+                        <button>Ver todos os 28 comentários</button>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400">HÁ 5 HORAS</div>
+                </div>
+                
+                <div class="comment-box px-4 py-3 flex">
+                    <input type="text" placeholder="Adicione um comentário..." class="flex-grow text-sm outline-none" />
+                    <button class="text-blue-500 font-semibold text-sm ml-2">Publicar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+        <div class="max-w-screen-md mx-auto px-4 flex justify-around items-center h-14">
+            <button class="text-2xl"><i class="fas fa-home"></i></button>
+            <button class="text-2xl"><i class="far fa-compass"></i></button>
+            <button class="text-2xl" id="uploadBtnMobile"><i class="fas fa-plus-square"></i></button>
+            <button class="text-2xl"><i class="far fa-heart"></i></button>
+            <div class="w-6 h-6 rounded-full bg-gray-300 overflow-hidden">
+                <img src="https://placehold.co/24x24" alt="Small circular user profile picture thumbnail" />
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Modal -->
+    <div class="upload-overlay" id="uploadOverlay">
+        <div class="upload-container mx-auto mt-20 p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold">Nova publicação</h2>
+                <button id="closeUpload" class="text-2xl">&times;</button>
+            </div>
+            
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center mb-4">
+                <div class="text-5xl text-gray-400 mb-2">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <p class="text-sm text-gray-500 mb-2">Arraste fotos e vídeos aqui</p>
+                <label for="fileUpload" class="bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded cursor-pointer">Selecionar do computador</label>
+                <input type="file" id="fileUpload" class="hidden" accept="image/*" />
+            </div>
+            
+            <div id="imagePreviewContainer" class="hidden mb-4">
+                <img id="imagePreview" src="#" alt="Preview of uploaded image will appear here" class="w-full h-auto rounded" />
+            </div>
+            
+            <div class="mb-4">
+                <label for="caption" class="block text-sm font-semibold mb-2">Legenda</label>
+                <textarea id="caption" class="w-full border border-gray-300 rounded p-2 text-sm" placeholder="Escreva uma legenda..."></textarea>
+            </div>
+            
+            <button id="postButton" class="bg-blue-500 text-white w-full py-2 rounded font-semibold disabled:opacity-50" disabled>Compartilhar</button>
+        </div>
+    </div>
+    
+    <script>
+    const uploadOverlay = document.getElementById('uploadOverlay');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const uploadBtnMobile = document.getElementById('uploadBtnMobile');
+    const closeUpload = document.getElementById('closeUpload');
+    const fileUpload = document.getElementById('fileUpload');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const imagePreview = document.getElementById('imagePreview');
+    const postButton = document.getElementById('postButton');
+    const captionInput = document.getElementById('caption');
+    const postsContainer = document.getElementById('postsContainer');
+    const username = 'você'; // ou pegue dinamicamente via login futuramente
+
+    async function fetchPhotos() {
+        try {
+            const res = await fetch("http://localhost:5000/api/photos");
+            const photos = await res.json();
+            postsContainer.innerHTML = "";
+            photos.reverse().forEach(photo => {
+                const post = createPostElement(photo.image_url, photo.description, photo.user, photo._id, photo.comments || []);
+                postsContainer.appendChild(post);
+            });
+        } catch (err) {
+            postsContainer.innerHTML = "<p class='text-center text-red-500'>Erro ao carregar fotos.</p>";
+        }
+    }
+
+    function openUploadModal() {
+        uploadOverlay.style.display = 'block';
+    }
+    uploadBtn.addEventListener('click', openUploadModal);
+    uploadBtnMobile.addEventListener('click', openUploadModal);
+    closeUpload.addEventListener('click', () => {
+        uploadOverlay.style.display = 'none';
+        resetUploadForm();
+    });
+
+    function resetUploadForm() {
+        fileUpload.value = '';
+        imagePreviewContainer.classList.add('hidden');
+        imagePreview.src = '#';
+        captionInput.value = '';
+        postButton.disabled = true;
+    }
+
+    fileUpload.addEventListener('change', function (e) {
+        if (e.target.files.length > 0) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                imagePreview.src = event.target.result;
+                imagePreviewContainer.classList.remove('hidden');
+                postButton.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    postButton.addEventListener('click', async function () {
+        const file = fileUpload.files[0];
+        const caption = captionInput.value;
+
+        if (!file || !caption) return;
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('description', caption);
+        formData.append('user', username);
+
+        try {
+            const res = await fetch("http://localhost:5000/api/photos", {
+                method: "POST",
+                body: formData
+            });
+            if (res.ok) {
+                uploadOverlay.style.display = 'none';
+                resetUploadForm();
+                fetchPhotos();
+            } else {
+                alert("Erro ao enviar a imagem");
+            }
+        } catch (err) {
+            alert("Erro na requisição");
+        }
+    });
+
+    function createPostElement(imageSrc, caption, user, photoId, comments = []) {
+        const postElement = document.createElement('div');
+        postElement.className = 'post-container mb-4';
+        postElement.innerHTML = `
+            <div class="flex items-center justify-between px-4 py-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full overflow-hidden">
+                        <img src="./noFoto.jpg" alt="Foto de perfil" />
+                    </div>
+                    <span class="font-semibold text-sm">${user}</span>
+                </div>
+            </div>
+            <div class="aspect-w-1 aspect-h-1 bg-gray-100">
+                <img src="${imageSrc}" alt="Imagem postada" class="w-full h-full object-cover" />
+            </div>
+            <div class="px-4 py-3">
+                <div class="flex justify-between mb-2">
+                    <div class="flex space-x-4">
+                        <button class="like-btn text-2xl" data-post="${photoId}"><i class="far fa-heart"></i></button>
+                        <button class="text-2xl"><i class="far fa-comment"></i></button>
+                        <button class="text-2xl"><i class="far fa-paper-plane"></i></button>
+                    </div>
+                    <button class="text-2xl"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="font-semibold text-sm mb-1" id="likes-${photoId}">0 curtidas</div>
+                <div class="text-sm mb-1">
+                    <span class="font-semibold">${user}</span> ${caption || ''}
+                </div>
+                <div class="comments-container"></div>
+                <div class="text-xs text-gray-400">AGORA MESMO</div>
+            </div>
+            <div class="comment-box px-4 py-3 flex">
+                <input type="text" placeholder="Adicione um comentário..." class="flex-grow text-sm outline-none" />
+                <button class="text-blue-500 font-semibold text-sm ml-2">Postar</button>
+            </div>
+        `;
+
+        // Mostrar comentários existentes
+        const commentsContainer = postElement.querySelector('.comments-container');
+        comments.forEach(comment => {
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'text-sm mb-1';
+            commentDiv.innerHTML = `<span class="font-semibold">${comment.user}</span> ${comment.text}`;
+            commentsContainer.appendChild(commentDiv);
+        });
+
+        // Curtir
+        const likeBtn = postElement.querySelector('.like-btn');
+        likeBtn.addEventListener('click', function () {
+            const heartIcon = this.querySelector('i');
+            const likesElement = document.getElementById(`likes-${photoId}`);
+            const currentLikes = parseInt(likesElement.textContent.replace(/\D/g, '')) || 0;
+
+            if (heartIcon.classList.contains('far')) {
+                heartIcon.classList.replace('far', 'fas');
+                likesElement.textContent = `${currentLikes + 1} curtidas`;
+            } else {
+                heartIcon.classList.replace('fas', 'far');
+                likesElement.textContent = `${currentLikes - 1} curtidas`;
+            }
+        });
+
+        // Publicar comentário
+        const commentInput = postElement.querySelector('.comment-box input');
+        const commentButton = postElement.querySelector('.comment-box button');
+        commentButton.addEventListener('click', async function () {
+            const commentText = commentInput.value.trim();
+            if (!commentText) return;
+
+            // Envia o comentário para a API
+            const res = await fetch(`http://localhost:5000/api/photos/${photoId}/comments`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user: username,
+                    text: commentText
+                })
+            });
+
+            if (res.ok) {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'text-sm mb-1';
+                commentDiv.innerHTML = `<span class="font-semibold">${username}</span> ${commentText}`;
+                commentsContainer.appendChild(commentDiv);
+                commentInput.value = '';
+            } else {
+                alert("Erro ao publicar comentário.");
+            }
+        });
+
+        return postElement;
+    }
+
+    fetchPhotos();
+</script>
+
+</body>
+</html>
