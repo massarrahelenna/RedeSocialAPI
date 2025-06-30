@@ -67,7 +67,7 @@ def get_photos():
     for photo in photos:
         photo["_id"] = str(photo["_id"])
         photo["image_url"] = f"http://localhost:5000/uploads/{photo['image_path']}"
-        photo["comments"] = photo.get("comments", [])  # Garante que sempre tenha a chave
+        photo["comments"] = photo.get("comments", [])  
     return jsonify(photos)
 
 # Adiciona comentário (POST)

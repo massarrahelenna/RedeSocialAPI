@@ -373,47 +373,45 @@
             }
         });
 
-        // Publicar comentário
-        const commentInput = postElement.querySelector('.comment-box input');
-        const commentButton = postElement.querySelector('.comment-box button');
-        commentButton.addEventListener('click', async function () {
-            const commentText = commentInput.value.trim();
-            if (!commentText) return;
+         // Publicar comentário
+      const commentInput = postElement.querySelector('.comment-box input');
+      const commentButton = postElement.querySelector('.comment-box button');
+      commentButton.addEventListener('click', async function () {
+          const commentText = commentInput.value.trim();
+          if (!commentText) return;
 
-            // Envia o comentário para a API
-            const response = await fetch(`http://localhost:5000/api/photos/${photoId}`);
-            const photoData = await response.json();
+          try {
+              // Envia o novo comentário para a API na rota correta
+              const res = await fetch(`http://localhost:5000/api/photos/${photoId}/comments`, {
+                  method: "POST", // 👈 1. Método correto
+                  headers: {
+                      "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ // 👈 2. Corpo da requisição com apenas os dados necessários
+                      user: username, // A variável 'username' global que você já tem
+                      text: commentText
+                  })
+              });
 
-            // Adiciona o novo comentário
-            const updatedComments = [...(photoData.comments || []), { user: username, text: commentText }];
+              if (res.ok) {
+                  // Adiciona o comentário na interface se a API confirmar o sucesso
+                  const commentsContainer = postElement.querySelector('.comments-container');
+                  const commentDiv = document.createElement('div');
+                  commentDiv.className = 'text-sm mb-1';
+                  commentDiv.innerHTML = `<span class="font-semibold">${username}</span> ${commentText}`;
+                  commentsContainer.appendChild(commentDiv);
+                  commentInput.value = ''; // Limpa o input
+              } else {
+                  alert("Erro ao publicar comentário.");
+              }
+          } catch (err) {
+              console.error("Erro na requisição:", err);
+              alert("Erro ao conectar com o servidor.");
+          }
+      });
 
-            // Atualiza a foto inteira com os novos comentários
-            const res = await fetch(`http://localhost:5000/api/photos/${photoId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    ...photoData,
-                    comments: updatedComments
-                })
-            });
-
-
-            if (res.ok) {
-                const commentDiv = document.createElement('div');
-                commentDiv.className = 'text-sm mb-1';
-                commentDiv.innerHTML = `<span class="font-semibold">${username}</span> ${commentText}`;
-                commentsContainer.appendChild(commentDiv);
-                commentInput.value = '';
-            } else {
-                alert("Erro ao publicar comentário.");
-            }
-        });
-
-        return postElement;
-    }
-
+      return postElement;
+  }
     fetchPhotos();
 </script>
 
